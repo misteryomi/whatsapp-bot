@@ -54,9 +54,21 @@ function getActionFeedback(_feedback, action, q, last_opt) {
                 }
             )[0];
 
+        // if(response.feedback) {
+        //     console.log({q})
+        //     _next_action = response.feedback.filter(fb => { 
+        //         console.log({fb})
+        //        return fb.input == q
+        //     })[0];
+
+        //     if(_next_action) {
+        //         response.next_action = _next_action;
+        //     }
+        // }
+        // console.log(response, 'me');
     } else {
         response = _feedback.filter((fb) => fb.action == action)[0];
-        // console.log(response,action,  'action');
+        console.log(response, 'action');
     }
 
     console.log('action_response', response);

@@ -12,6 +12,8 @@ import {
 
 import {
     federalAction,
+    stateAction,
+    privateAction
 } from './actions';
 
 export default [
@@ -42,22 +44,21 @@ export default [
         intent: 'check_ippis'
     },
     {
-        keywords: ['state'],
-        message: stateText,
-        type: 'input',
-        input_type: 'ippis'
+        keywords: ['state', 'lagos'],
+        // message: stateText,
+        action: stateAction,
+        intent: 'check_oracle'
     },
-    {
-        keywords: ['lagos'],
-        message: lagosText,
-        type: 'input',
-        input_type: 'ippis'
-    },
+    // {
+    //     keywords: ['lagos'],
+    //     message: stateAction,
+    //     action: stateAction,
+    //     intent: 'check_oracle'
+    // },
     {
         keywords: ['private'],
-        message: privateText,
-        type: 'input',
-        input_type: 'ippis'
+        action: privateAction,
+        intent: 'check_location'
     },
     {
         keywords: ['sme'],
