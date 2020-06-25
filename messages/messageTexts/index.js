@@ -8,7 +8,7 @@ import loanText from './loan';
 import smeText from './sme';
 import othersText from './others';
 import complaintText from './complaint';
-
+import fixedDepositText from './fixed-deposit';
 
 export {
     welcomeText,
@@ -21,4 +21,5 @@ export {
     loanText,
     othersText,
     complaintText,
+    fixedDepositText,
 }

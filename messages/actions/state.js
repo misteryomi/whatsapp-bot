@@ -1,7 +1,7 @@
 export default [
     {
         action: "check_oracle",
-        message: 'You selected the *Lagos* option: \n\n Kindly input your Oracle number:',
+        message: 'You selected the *State* option: \n\n Kindly input your Oracle number:',
         feedback_type: 'input',
         // feedback: [
         //     {

@@ -2,12 +2,13 @@ export default `
 
 Thank you for choosing *loan enquiries*.
 
+Please select an option:
 
-For Federal Service Servant, type *Federal*
-For Lagos State Employee, type *Lagos*
-For Private Sector Employee, type *Private*
-For Small Business Ownerm type *SME*
-For Other Loan enquiries, type *Others*
+*1.* For Federal Service Servant
+*2.* For Lagos State Employee
+*3.* For Private Sector Employee
+*4.* For Small Business Owners
+*5.* For Other Loan enquiries
 
 -----
 Type *Home* to return to the *main menu*

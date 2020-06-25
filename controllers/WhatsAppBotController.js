@@ -17,20 +17,51 @@ var next_action;
 var action_feedbacks;
 var feedback;
 var count;
-
+var active_intent = '';
 
 twilio(accountSid, TwilioAuthToken);
 const { MessagingResponse } = twilio.twiml;
 
 function getFeedback(keyword) {
-    const response = feedbacks.filter(
-        (feedback) =>
-            feedback.keywords.includes(keyword.toLowerCase())
-        )[0];
+    let response;
 
-        if(response.action) {
+    console.log({active_intent});
 
+    feedbacks.forEach((feedback) => {
+        if(active_intent == 'loan' && feedback.sub && feedback.sub.length > 0) {
+            let sub = feedback.sub.filter((f) => {
+                return f.keywords.includes(keyword.toLowerCase())
+            })[0];
+            response = sub;
+            return;
+        } else {
+            if(feedback.keywords.includes(keyword.toLowerCase())) {
+                response = feedback;
+                return;
+            }
         }
+    })
+
+    if(response.initial_intent) {
+        //update with the current initial intent
+        active_intent = response.initial_intent;
+    }
+
+
+    // const response = feedbacks.filter(
+    //     (feedback) => 
+    //     {
+
+    //     }        
+    //         // feedback.keywords.includes(keyword.toLowerCase())
+    //     )[0];
+
+    //     console.log({active_intent})
+    //     console.log({response});
+    //     if(response.initial_intent) {
+    //         active_intent = response.initial_intent;
+    //     }
+
 
     return response;
     // return response ? response.message : defaultMessage;
@@ -91,7 +122,7 @@ class WhatsAppBot {
             let response;
 
 
-            // console.log({next_action});
+            console.log({next_action});
             
             if(next_action) {
                 feedback = getActionFeedback(action_feedbacks, next_action, q, 'noooo');

@@ -1,19 +1,19 @@
 export default [
     {
         action: "check_location",
-        message: 'You selected the *Private* option: \n\n Are you based in Lagos?',
-        feedback_type: 'options',
-        feedback: [
-            {
-                input: "no",
-                next_action: "no",
-            },
-            {
-                input: "yes",
-                next_action: "yes",
-            },
-        ],
-        // next_action: "yes" 
+        message: 'You selected the *Lagos* option: \n\n If you are you based in Lagos, type *Yes* to continue',
+        feedback_type: 'input',
+        // feedback: [
+        //     {
+        //         input: "no",
+        //         next_action: "no",
+        //     },
+        //     {
+        //         input: "yes",
+        //         next_action: "yes",
+        //     },
+        // ],
+        next_action: "others" 
     },
     {
         action: "yes",
