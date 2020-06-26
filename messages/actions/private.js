@@ -1,8 +1,10 @@
 export default [
     {
         action: "check_location",
-        message: 'You selected the *Lagos* option: \n\n If you are you based in Lagos, type *Yes* to continue',
+        message: 'You selected the *Lagos* option: \n\nWhat industry do you work?',
         feedback_type: 'input',
+        actionService: 'saveUserIppis()',
+
         // feedback: [
         //     {
         //         input: "no",
@@ -13,15 +15,15 @@ export default [
         //         next_action: "yes",
         //     },
         // ],
-        next_action: "others" 
-    },
-    {
-        action: "yes",
-        message: "What industry do you work?",
-        feedback_type: 'input',
-        actionService: 'saveUserIppis()',
         next_action: "confirmed_staff" 
     },
+    // {
+    //     action: "yes",
+    //     message: "What industry do you work?",
+    //     feedback_type: 'input',
+    //     actionService: 'saveUserIppis()',
+    //     next_action: "confirmed_staff" 
+    // },
     {
         action: "no",
         message: "Unfortunately, we only give loans to individuals withing Lagos state",

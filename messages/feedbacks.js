@@ -16,12 +16,14 @@ import {
     stateAction,
     privateAction
 } from './actions';
+import initializeSession from '../models/initializeSession';
 
 export default [
     {
         keywords: ['hi', 'hello', "good morning", "good afternoon", "good evening", 'home'],
         message: welcomeText,
         initial_intent: 'welcome',
+        initial_action: initializeSession
     },
     {
         keywords: ['1'],

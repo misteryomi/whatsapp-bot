@@ -1,8 +1,7 @@
+import v1Routes from './api';
+import webRoutes from './web';
 
-import { Router } from 'express';
-import botRouter from './search';
-
-const v1Router = Router();
-v1Router.use('/api/v1', botRouter);
-
-export default v1Router;
+export {
+    v1Routes,
+    webRoutes,
+}

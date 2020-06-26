@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import v1Routes from './routes';
+import { v1Routes, webRoutes } from './routes';
+import mustacheExpress from 'mustache-express';
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -10,6 +11,13 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(v1Routes);
+app.use(webRoutes);
+
+app.engine('html', mustacheExpress())
+app.set('view engine', 'html');
+app.set('views', __dirname + '/src/views');
+app.use(express.static('public'));
+
 
 //404 error handler
 app.use((req, res, next) => {

@@ -33,7 +33,7 @@ export default [
     // },
     {
         action: "net_pay",
-        message: "What is your current Net-Pay?",
+        message: "What is your average monthly net pay?",
         feedback_type: 'input',
         actionService: 'saveUserNetPay()',
         next_action: "loan_amount"
