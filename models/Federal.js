@@ -2,9 +2,9 @@
 import crypto from 'crypto';
 import db from '../db';
 
-export const initializeRequest = (phone_no, ippis_number) => {
+export const initializeRequest = (phone_no, ippis_number, session_hash) => {
 
-    let query = "INSERT into `federal_requests` (phone_no, ippis_number) VALUES ('" + phone_no + "', '" + ippis_number + "')";
+    let query = "INSERT into `federal_requests` (phone_no, ippis_number, session_hash) VALUES ('" + phone_no + "', '" + ippis_number + "', '"+session_hash+"')";
 
     db.query(query, (err, res) => {
         console.log({err, res})
@@ -21,9 +21,9 @@ export const initializeRequest = (phone_no, ippis_number) => {
     })    
 }
 
-export const updateRecord = (phone_no, field, value) => {
+export const updateRecord = (phone_no, field, value, session_hash) => {
 
-    let query = "UPDATE `federal_requests` SET `"+ field +"` = '"+ value+"', `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' ";
+    let query = "UPDATE `federal_requests` SET `"+ field +"` = '"+ value+"', `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' AND session_hash = '" + session_hash + "'";
 
     db.query(query, (err, res) => {
         // console.log({err, res})

@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import twilio from 'twilio';
 import feedbacks from '../messages/feedbacks';
 import defaultMessage from '../messages/default';
-import { updateSessionCurrentAction, updateSessionNextAction } from '../models/Session';
+import { updateSessionCurrentAction, updateSessionNextAction, getUserSession } from '../models/Session';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ const {
     APP_ENV: environment,
 } = process.env;
 
-var next_action;
+// var next_action;
 var action_feedbacks;
 var feedback;
 var count;
@@ -85,7 +85,8 @@ function getFeedback(keyword, phone) {
 }
 
 
-function getActionFeedback(_feedback, action, q, phone) {
+function getActionFeedback(_feedback, action, q, phone, session_hash) {
+    console.log({_feedback})
 //    console.log('checking oooo', _feedback, next_action, action, last_opt);
 
     // console.log('action', action, count,last_opt)
@@ -121,7 +122,7 @@ function getActionFeedback(_feedback, action, q, phone) {
 
     if(response.actionService) {
         console.log(response)
-        response.actionService(phone, response.previous_action, response.next_action, q);
+        response.actionService(phone, response.previous_action, response.next_action, q, session_hash);
     }
 
     updateSessionCurrentAction(phone, response.action);
@@ -146,13 +147,22 @@ class WhatsAppBot {
 
         try {
             let response;
-
-
-            // console.log({next_action});
+            let feedback;
+            let next_action;
             
+            const session = await getUserSession(phone);
+            if(session && session.next_action !== 'undefined') {
+                next_action = session.next_action;                
+            }
+
+
+            console.log({next_action})
+
             if(next_action) {
-                feedback = getActionFeedback(action_feedbacks, next_action, q, phone);
-                next_action = feedback.next_action;
+                feedback = getActionFeedback(action_feedbacks, next_action, q, phone, session.session_hash);
+                console.log({feedback});
+                // next_action = feedback.next_action;
+                updateSessionNextAction(feedback.next_action);
     
             } else {                
                 feedback = getFeedback(q, phone);
@@ -166,8 +176,9 @@ class WhatsAppBot {
 
 
             if(feedback.intent) {
-                response = getActionFeedback(feedback, feedback.intent, q, phone);
-                next_action = response.next_action
+                response = getActionFeedback(feedback, feedback.intent, q, phone, session.session_hash);
+                // next_action = response.next_action
+                 updateSessionNextAction(feedback.next_action);
                 // console.log({response});
             } else {
                 response = feedback;
@@ -189,6 +200,13 @@ class WhatsAppBot {
                 res.set('Content-Type', 'application/json');
                 return res.status(200).send({message});
             }
+
+            // let next_action = getUserSession(phone).next_action;
+
+
+            // console.log({next_action});
+            
+
         } catch(error) {
             return next(error);
         }

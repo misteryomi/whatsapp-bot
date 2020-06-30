@@ -2,9 +2,9 @@
 import crypto from 'crypto';
 import db from '../db';
 
-export const initializeSession = (phone_no) => {
+export const initializeSession = async (phone_no) => {
 
-    let session =  getUserSession(phone_no);
+    var session = await getUserSession(phone_no);
 
     if(!session) {
         let session_hash = crypto.randomBytes(20).toString('hex');
@@ -29,21 +29,25 @@ export const initializeSession = (phone_no) => {
 }
 
 
-export const getUserSession = (phone_no) => {
+export const getUserSession = (phone_no, cb) => {
 
 
     let query = "SELECT * FROM `sessions` WHERE `phone_no` = '" + phone_no + "' AND `status` = 1 LIMIT 1";
+    return new Promise(function(resolve, reject){
+        db.query(query, (err, res) => {
+        // console.log({err, res})
 
-    db.query(query, (err, res) => {
-        console.log({err, res})
+                if(err) {
+                    console.log(err);
+                    reject(err)
+                    // throw err;
+                };
 
-        if(err) {
-            console.log(err);
-            throw err;
-        };
-
-        return res[0];        
-    })    
+                // console.log(res[0].next_action, 'status');
+                resolve(res[0]);
+                // return res[0];      
+            });
+    });
 }
 
 
@@ -80,9 +84,9 @@ export const updateSessionCurrentAction = (phone_no, current_action) => {
 }
 
 
-export const endSession = (phone_no) => {
+export const endSession = (phone_no, session_hash) => {
 
-    let query = "UPDATE `sessions` SET `status` = 0, `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' and `status` = 1 ";
+    let query = "UPDATE `sessions` SET `status` = 0, `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' and `session_hash` = '"+ session_hash +"' and `status` = 1 ";
 
     db.query(query, (err, res) => {
         // console.log({err, res})
