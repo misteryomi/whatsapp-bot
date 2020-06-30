@@ -16,7 +16,7 @@ import {
     stateAction,
     privateAction
 } from './actions';
-import initializeSession from '../models/initializeSession';
+import initializeSession from '../actions/initializeSession';
 
 export default [
     {
@@ -33,7 +33,7 @@ export default [
                 keywords: ['federal', '1'],
                 // message: federalText,
                 action: federalAction,
-                intent: 'check_ippis'
+                intent: 'ippis_number'
             },
             {
                 keywords: ['state', 'lagos', '2'],

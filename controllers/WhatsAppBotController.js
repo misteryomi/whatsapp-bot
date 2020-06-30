@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import twilio from 'twilio';
 import feedbacks from '../messages/feedbacks';
 import defaultMessage from '../messages/default';
+import { updateSessionCurrentAction, updateSessionNextAction } from '../models/Session';
 
 dotenv.config();
 
@@ -118,6 +119,14 @@ function getActionFeedback(_feedback, action, q, phone) {
         // console.log(response, 'action');
     }
 
+    if(response.actionService) {
+        console.log(response)
+        response.actionService(phone, response.previous_action, response.next_action, q);
+    }
+
+    updateSessionCurrentAction(phone, response.action);
+    updateSessionNextAction(phone, response.next_action);
+
     // console.log('action_response', response);
     // console.log('new resp', q, next_action, response)
     return response
@@ -154,7 +163,7 @@ class WhatsAppBot {
                 }
             }
 
-          
+
 
             if(feedback.intent) {
                 response = getActionFeedback(feedback, feedback.intent, q, phone);
