@@ -32,11 +32,11 @@ console.log({
   user,
   password,
   database
-});
-db.connect(err => {
-  if (err) throw err;
-  console.log('connected to db');
-});
+}); // db.connect(err => {
+//     if(err) throw err;
+//     console.log('connected to db');
+// })
+
 var _default = db;
 exports.default = _default;
 //# sourceMappingURL=db.js.map

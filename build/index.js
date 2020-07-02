@@ -20,8 +20,8 @@ var _db = _interopRequireDefault(require("./db"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express.default)();
-var PORT = process.env.PORT || 3005;
-global.db = _db.default;
+var PORT = process.env.PORT || 3005; // global.db = db;
+
 app.use((0, _cors.default)());
 app.use(_bodyParser.default.urlencoded({
   extended: false
