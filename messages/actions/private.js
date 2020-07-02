@@ -3,7 +3,7 @@ export default [
         action: "check_location",
         message: 'You selected the *Lagos* option: \n\nWhat industry do you work?',
         feedback_type: 'input',
-        actionService: 'saveUserIppis()',
+        // actionService: 'saveUserIppis()',
 
         // feedback: [
         //     {
@@ -32,7 +32,7 @@ export default [
         action: "confirmed_staff",
         message: "Are you a confirmed staff?",
         feedback_type: 'input',
-        actionService: 'saveUserNetPay()',
+        // actionService: 'saveUserNetPay()',
         next_action: "full_name"
     },
       
@@ -40,7 +40,7 @@ export default [
         action: "full_name",
         message: "Kindly confirm your name and surname:",
         feedback_type: 'input',
-        actionService: 'saveFullName()',
+        // actionService: 'saveFullName()',
         next_action: "close_session"
     },        
     {

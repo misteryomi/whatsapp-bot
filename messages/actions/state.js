@@ -13,7 +13,7 @@ export default [
         //         next_action: "oracle",
         //     },
         // ],
-        actionService: 'saveUserIppis()',
+        // actionService: 'saveUserIppis()',
         next_action: "net_pay" 
         // next_action: "oracle" 
     },
@@ -35,28 +35,28 @@ export default [
         action: "net_pay",
         message: "What is your average monthly net pay?",
         feedback_type: 'input',
-        actionService: 'saveUserNetPay()',
+        // actionService: 'saveUserNetPay()',
         next_action: "loan_amount"
     },
     {
         action: "loan_amount",
         message: "How much do you need as loan?",
         feedback_type: 'input',
-        actionService: 'checkUserLoanAmount()',
+        // actionService: 'checkUserLoanAmount()',
         next_action: "loan_tenor"
     },
     {
         action: "loan_tenor",
         message: "Loan tenor (maximum tenor is 18 months)",
         feedback_type: 'input',
-        actionService: 'saveLoanTenor()',
+        // actionService: 'saveLoanTenor()',
         next_action: "full_name"
     },        
     {
         action: "full_name",
         message: "Kindly confirm your name and surname:",
         feedback_type: 'input',
-        actionService: 'saveFullName()',
+        // actionService: 'saveFullName()',
         next_action: "close_session_success"
     },        
     {

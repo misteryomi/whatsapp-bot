@@ -191,12 +191,12 @@ class WhatsAppBot {
             count++;
 
             if(environment == 'production') {
-               twiml.message(message);
+               twiml.message(`${message}`);
      
+               console.log(message);
                res.set('Content-Type', 'text/xml');
                return res.status(200).send(twiml.toString());
             } else {
-    
                 res.set('Content-Type', 'application/json');
                 return res.status(200).send({message});
             }
@@ -208,6 +208,7 @@ class WhatsAppBot {
             
 
         } catch(error) {
+            console.log({error})
             return next(error);
         }
     }
