@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/actions/initializeSession.js"],"names":["phone_no"],"mappings":";;;;;;;AAAA;;AAGe,kBAASA,QAAT,EAAmB;AAC9B,SAAO,gCAAkBA,QAAlB,CAAP;AACH","sourcesContent":["import { initializeSession } from '../models/Session';\n\n\nexport default function(phone_no) {\n    return initializeSession(phone_no)\n}"],"file":"initializeSession.js"}

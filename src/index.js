@@ -19,8 +19,8 @@ app.use(webRoutes);
 
 app.engine('html', mustacheExpress())
 app.set('view engine', 'html');
-app.set('views', __dirname + '/src/views');
-app.use(express.static('public'));
+app.set('views', __dirname + '/../views');
+app.use(express.static('/public'));
 
 
 //404 error handler

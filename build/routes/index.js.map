@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/routes/index.js"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;AAAA;;AACA","sourcesContent":["import v1Routes from './api';\nimport webRoutes from './web';\n\nexport {\n    v1Routes,\n    webRoutes,\n}"],"file":"index.js"}

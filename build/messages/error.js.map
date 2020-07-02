@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/messages/error.js"],"names":["message","errorText"],"mappings":";;;;;;;AAAA;;eAGI;AACIA,EAAAA,OAAO,EAAEC;AADb,C","sourcesContent":["import { errorText } from './messageTexts';\n\nexport default \n    {\n        message: errorText,\n    }\n"],"file":"error.js"}
