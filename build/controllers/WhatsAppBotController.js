@@ -143,7 +143,9 @@ class WhatsAppBot {
         var next_action;
         var session = yield (0, _Session.getUserSession)(phone);
 
-        if (!session) {
+        if (!session || !action_feedbacks) {
+          yield (0, _Session.endSession)(phone); //end previous sessions
+
           yield (0, _initializeSession.default)(phone);
           session = yield (0, _Session.getUserSession)(phone);
           console.log('new session');

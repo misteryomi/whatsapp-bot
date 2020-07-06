@@ -29,6 +29,8 @@ var _default = [{
   next_action: "close_session"
 }, {
   action: "close_session",
+  actionService: _privateAction.saveFullName,
+  previous_action: "full_name",
   message: "Thank you for reaching out. \n\n One of our relationship officers will get in touch with you shortly. Kindly have the following available: \nPayslip \nProof of ID ( National ID card/Drivers License/International Passport) \nBVN details \nPassport photograph. \n\nThank You.\n Do have a great day!"
 }];
 exports.default = _default;

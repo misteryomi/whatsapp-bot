@@ -86,7 +86,7 @@ export const updateSessionCurrentAction = (phone_no, current_action) => {
 
 export const endSession = (phone_no, session_hash) => {
 
-    let query = "UPDATE `sessions` SET `status` = 0, `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' and `session_hash` = '"+ session_hash +"' and `status` = 1 ";
+    let query = "UPDATE `sessions` SET `status` = 0, `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' and `status` = 1 "; //and `session_hash` = '"+ session_hash +"'
 
     db.query(query, (err, res) => {
         // console.log({err, res})

@@ -103,7 +103,7 @@ var updateSessionCurrentAction = (phone_no, current_action) => {
 exports.updateSessionCurrentAction = updateSessionCurrentAction;
 
 var endSession = (phone_no, session_hash) => {
-  var query = "UPDATE `sessions` SET `status` = 0, `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' and `session_hash` = '" + session_hash + "' and `status` = 1 ";
+  var query = "UPDATE `sessions` SET `status` = 0, `updated_at` = NOW() WHERE `phone_no` = '" + phone_no + "' and `status` = 1 "; //and `session_hash` = '"+ session_hash +"'
 
   _db.default.query(query, (err, res) => {
     // console.log({err, res})

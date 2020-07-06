@@ -16,8 +16,7 @@ var initializeRequest = (phone_no, oracle_number, session_hash) => {
     console.log({
       err,
       res
-    }); // if(err) res.status(500).send(err);
-    // res.status(200);
+    });
 
     if (err) {
       console.log(err);

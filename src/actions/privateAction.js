@@ -16,5 +16,10 @@ export const saveIndustry = (phone_no, action, next_action, value, session_hash)
 export const saveIsConfirmed = (phone_no, action, next_action, value, session_hash) => {
 
     updateRecord(phone_no, action, value, session_hash);
+}
+
+export const saveFullName = (phone_no, action, next_action, value, session_hash) => {
+
+    updateRecord(phone_no, action, value, session_hash);
     endSession(phone_no, session_hash);
 }

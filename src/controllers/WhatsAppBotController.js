@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import twilio from 'twilio';
 import feedbacks from '../messages/feedbacks';
 import defaultMessage from '../messages/default';
-import { updateSessionCurrentAction, updateSessionNextAction, getUserSession } from '../models/Session';
+import { updateSessionCurrentAction, updateSessionNextAction, getUserSession, endSession } from '../models/Session';
 import { welcomeText } from '../messages/messageTexts';
 import initializeSession from '../actions/initializeSession';
 
@@ -129,7 +129,8 @@ class WhatsAppBot {
             
             let session = await getUserSession(phone);
 
-            if(!session) {
+            if(!session || !action_feedbacks) {
+                await endSession(phone); //end previous sessions
                 await initializeSession(phone);
                 session = await getUserSession(phone);
                 console.log('new session');
@@ -140,8 +141,8 @@ class WhatsAppBot {
                 next_action = session.next_action;                
             }
 
+            console.log({next_action});
 
-            console.log({next_action})
 
             if(next_action) {
                 feedback = getActionFeedback(action_feedbacks, next_action, q, phone, session.session_hash);

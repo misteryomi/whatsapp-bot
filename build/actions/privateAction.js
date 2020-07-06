@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.saveIsConfirmed = exports.saveIndustry = exports.initialize = void 0;
+exports.saveFullName = exports.saveIsConfirmed = exports.saveIndustry = exports.initialize = void 0;
 
 var _Private = require("../models/Private");
 
@@ -23,8 +23,14 @@ exports.saveIndustry = saveIndustry;
 
 var saveIsConfirmed = (phone_no, action, next_action, value, session_hash) => {
   (0, _Private.updateRecord)(phone_no, action, value, session_hash);
-  (0, _Session.endSession)(phone_no, session_hash);
 };
 
 exports.saveIsConfirmed = saveIsConfirmed;
+
+var saveFullName = (phone_no, action, next_action, value, session_hash) => {
+  (0, _Private.updateRecord)(phone_no, action, value, session_hash);
+  (0, _Session.endSession)(phone_no, session_hash);
+};
+
+exports.saveFullName = saveFullName;
 //# sourceMappingURL=privateAction.js.map
