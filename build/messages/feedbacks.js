@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _default = [{
   keywords: ['hi', 'hello', "good morning", "good afternoon", "good evening", 'home'],
-  message: _messageTexts.welcomeText,
+  message: "Welcome to Primera MFBank. Your partner for growth.\n\n".concat(_messageTexts.welcomeText),
   initial_intent: 'welcome',
   initial_action: _initializeSession.default
 }, {
@@ -30,7 +30,7 @@ var _default = [{
     keywords: ['state', 'lagos', '2'],
     // message: stateText,
     action: _actions.stateAction,
-    intent: 'check_oracle'
+    intent: 'oracle_number'
   }, // {
   //     keywords: ['lagos'],
   //     message: stateAction,
@@ -40,7 +40,7 @@ var _default = [{
   {
     keywords: ['private', '3'],
     action: _actions.privateAction,
-    intent: 'check_location'
+    intent: 'industry'
   }, {
     keywords: ['sme', '4'],
     message: _messageTexts.smeText,

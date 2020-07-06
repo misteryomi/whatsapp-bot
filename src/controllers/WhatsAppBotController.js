@@ -3,6 +3,8 @@ import twilio from 'twilio';
 import feedbacks from '../messages/feedbacks';
 import defaultMessage from '../messages/default';
 import { updateSessionCurrentAction, updateSessionNextAction, getUserSession } from '../models/Session';
+import { welcomeText } from '../messages/messageTexts';
+import initializeSession from '../actions/initializeSession';
 
 dotenv.config();
 
@@ -25,7 +27,10 @@ const { MessagingResponse } = twilio.twiml;
 
 
 function getFeedback(keyword, phone) {
-    let response;
+    let response = {
+        message: `Sorry, we could not catch that. \n\n${welcomeText}`,
+        initial_intent: 'welcome',
+    };
 
     // console.log({active_intent});
 
@@ -35,26 +40,25 @@ function getFeedback(keyword, phone) {
     // feedbacks.forEach((feedback) => {
         if(active_intent == 'loan' && feedback.sub && feedback.sub.length > 0) {
             let sub = feedback.sub.filter((f) => {
-                console.log(f.keywords.includes(keyword.toLowerCase()), f.keywords)
+                // console.log(f.keywords.includes(keyword.toLowerCase()), f.keywords)
                 return f.keywords.includes(keyword.toLowerCase())
             })[0];
-            // console.log({sub});
-            response = sub;
+            if(sub) {
+                response = sub;
+            }
             break;
             // return;
         } else {
-            if(feedback.keywords.includes(keyword.toLowerCase())) {
+            if(feedback && feedback.keywords.includes(keyword.toLowerCase())) {
                 // console.log('checking here tooo?')
                 response = feedback;
                 break;
                 // return;
-            } else {
-                //set a default response to tell the user we cannot find an appropriate feedback, but they can reach out to a customer care rep
-            }
+            } 
         }
     }
     //)
-
+    console.log({response})
     if(response.initial_intent) {
         //update with the current initial intent
         active_intent = response.initial_intent;
@@ -64,21 +68,6 @@ function getFeedback(keyword, phone) {
         response.initial_action(phone)
     }
 
-    // const response = feedbacks.filter(
-    //     (feedback) => 
-    //     {
-
-    //     }        
-    //         // feedback.keywords.includes(keyword.toLowerCase())
-    //     )[0];
-
-    //     console.log({active_intent})
-    //     console.log({response});
-    //     if(response.initial_intent) {
-    //         active_intent = response.initial_intent;
-    //     }
-
-    // console.log({response})
 
     return response;
     // return response ? response.message : defaultMessage;
@@ -103,18 +92,6 @@ function getActionFeedback(_feedback, action, q, phone, session_hash) {
                 }
             )[0];
 
-        // if(response.feedback) {
-        //     console.log({q})
-        //     _next_action = response.feedback.filter(fb => { 
-        //         console.log({fb})
-        //        return fb.input == q
-        //     })[0];
-
-        //     if(_next_action) {
-        //         response.next_action = _next_action;
-        //     }
-        // }
-        // console.log(response, 'me');
     } else {
         response = _feedback.filter((fb) => fb.action == action)[0];
         // console.log(response, 'action');
@@ -150,8 +127,16 @@ class WhatsAppBot {
             let feedback;
             let next_action;
             
-            const session = await getUserSession(phone);
-            if(session && session.next_action !== 'undefined') {
+            let session = await getUserSession(phone);
+
+            if(!session) {
+                await initializeSession(phone);
+                session = await getUserSession(phone);
+                console.log('new session');
+            }
+
+            console.log({session})
+            if(session.next_action || session.next_action !== 'undefined') {
                 next_action = session.next_action;                
             }
 

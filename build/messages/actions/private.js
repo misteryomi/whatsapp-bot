@@ -4,43 +4,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _privateAction = require("../../actions/privateAction");
+
 var _default = [{
-  action: "check_location",
+  action: "industry",
   message: 'You selected the *Lagos* option: \n\nWhat industry do you work?',
   feedback_type: 'input',
-  // actionService: 'saveUserIppis()',
-  // feedback: [
-  //     {
-  //         input: "no",
-  //         next_action: "no",
-  //     },
-  //     {
-  //         input: "yes",
-  //         next_action: "yes",
-  //     },
-  // ],
-  next_action: "confirmed_staff"
-}, // {
-//     action: "yes",
-//     message: "What industry do you work?",
-//     feedback_type: 'input',
-//     actionService: 'saveUserIppis()',
-//     next_action: "confirmed_staff" 
-// },
-{
-  action: "no",
-  message: "Unfortunately, we only give loans to individuals withing Lagos state"
+  actionService: _privateAction.initialize,
+  next_action: "is_confirmed_staff"
 }, {
-  action: "confirmed_staff",
+  action: "is_confirmed_staff",
   message: "Are you a confirmed staff?",
   feedback_type: 'input',
-  // actionService: 'saveUserNetPay()',
+  actionService: _privateAction.saveIndustry,
+  previous_action: "industry",
   next_action: "full_name"
 }, {
   action: "full_name",
   message: "Kindly confirm your name and surname:",
   feedback_type: 'input',
-  // actionService: 'saveFullName()',
+  actionService: _privateAction.saveIsConfirmed,
+  previous_action: "is_confirmed_staff",
   next_action: "close_session"
 }, {
   action: "close_session",

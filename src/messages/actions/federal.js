@@ -7,32 +7,8 @@ export default [
         message: 'You selected the *Federal* option: \n\n Kindly input your IPPIS number:',
         feedback_type: 'input', // 'options',
         actionService: initialize,
-        // feedback: [
-        //     {
-        //         input: "no",
-        //         next_action: "no_ippis",
-        //     },
-        //     {
-        //         input: "yes",
-        //         next_action: "ippis",
-        //     },
-        // ],
         next_action: "net_pay" 
     },
-    // {
-    //     action: "ippis",
-    //     message: "Kindly input your IPPIS number",
-    //     feedback_type: 'input',
-    //     actionService: 'saveUserIppis()',
-    //     next_action: "net_pay" 
-    // },
-    // {
-    //     action: "no_ippis",
-    //     message: "Kindly avail us your name and email address. One of our customer service agents will get in touch with you shortly.",
-    //     feedback_type: 'input',
-    //     actionService: 'saveUserNameEmail()',
-    //     next_action: "close_session"
-    // },
     {
         action: "net_pay",
         message: "What is your average monthly net pay?",

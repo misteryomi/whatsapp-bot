@@ -15,6 +15,10 @@ var _default2 = _interopRequireDefault(require("../messages/default"));
 
 var _Session = require("../models/Session");
 
+var _messageTexts = require("../messages/messageTexts");
+
+var _initializeSession = _interopRequireDefault(require("../actions/initializeSession"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -41,7 +45,10 @@ var {
 } = _twilio.default.twiml;
 
 function getFeedback(keyword, phone) {
-  var response; // console.log({active_intent});
+  var response = {
+    message: "Sorry, we could not catch that. \n\n".concat(_messageTexts.welcomeText),
+    initial_intent: 'welcome'
+  }; // console.log({active_intent});
 
   for (var i = 0; i <= _feedbacks.default.length; i++) {
     var _feedback2 = _feedbacks.default[i]; // console.log(feedback);
@@ -49,23 +56,28 @@ function getFeedback(keyword, phone) {
 
     if (active_intent == 'loan' && _feedback2.sub && _feedback2.sub.length > 0) {
       var sub = _feedback2.sub.filter(f => {
-        console.log(f.keywords.includes(keyword.toLowerCase()), f.keywords);
+        // console.log(f.keywords.includes(keyword.toLowerCase()), f.keywords)
         return f.keywords.includes(keyword.toLowerCase());
-      })[0]; // console.log({sub});
+      })[0];
 
+      if (sub) {
+        response = sub;
+      }
 
-      response = sub;
       break; // return;
     } else {
-      if (_feedback2.keywords.includes(keyword.toLowerCase())) {
+      if (_feedback2 && _feedback2.keywords.includes(keyword.toLowerCase())) {
         // console.log('checking here tooo?')
         response = _feedback2;
         break; // return;
-      } else {//set a default response to tell the user we cannot find an appropriate feedback, but they can reach out to a customer care rep
-        }
+      }
     }
   } //)
 
+
+  console.log({
+    response
+  });
 
   if (response.initial_intent) {
     //update with the current initial intent
@@ -74,19 +86,7 @@ function getFeedback(keyword, phone) {
 
   if (response.initial_action) {
     response.initial_action(phone);
-  } // const response = feedbacks.filter(
-  //     (feedback) => 
-  //     {
-  //     }        
-  //         // feedback.keywords.includes(keyword.toLowerCase())
-  //     )[0];
-  //     console.log({active_intent})
-  //     console.log({response});
-  //     if(response.initial_intent) {
-  //         active_intent = response.initial_intent;
-  //     }
-  // console.log({response})
-
+  }
 
   return response; // return response ? response.message : defaultMessage;
 }
@@ -105,17 +105,7 @@ function getActionFeedback(_feedback, action, q, phone, session_hash) {
       // console.log({ac}, action);
       // console.log('act=>', ac == action && action)
       return fb.action == action;
-    })[0]; // if(response.feedback) {
-    //     console.log({q})
-    //     _next_action = response.feedback.filter(fb => { 
-    //         console.log({fb})
-    //        return fb.input == q
-    //     })[0];
-    //     if(_next_action) {
-    //         response.next_action = _next_action;
-    //     }
-    // }
-    // console.log(response, 'me');
+    })[0];
   } else {
     response = _feedback.filter(fb => fb.action == action)[0]; // console.log(response, 'action');
   }
@@ -153,7 +143,17 @@ class WhatsAppBot {
         var next_action;
         var session = yield (0, _Session.getUserSession)(phone);
 
-        if (session && session.next_action !== 'undefined') {
+        if (!session) {
+          yield (0, _initializeSession.default)(phone);
+          session = yield (0, _Session.getUserSession)(phone);
+          console.log('new session');
+        }
+
+        console.log({
+          session
+        });
+
+        if (session.next_action || session.next_action !== 'undefined') {
           next_action = session.next_action;
         }
 

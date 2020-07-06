@@ -21,7 +21,7 @@ import initializeSession from '../actions/initializeSession';
 export default [
     {
         keywords: ['hi', 'hello', "good morning", "good afternoon", "good evening", 'home'],
-        message: welcomeText,
+        message: `Welcome to Primera MFBank. Your partner for growth.\n\n${welcomeText}`,
         initial_intent: 'welcome',
         initial_action: initializeSession
     },
@@ -39,7 +39,7 @@ export default [
                 keywords: ['state', 'lagos', '2'],
                 // message: stateText,
                 action: stateAction,
-                intent: 'check_oracle'
+                intent: 'oracle_number'
             },
             // {
             //     keywords: ['lagos'],
@@ -50,7 +50,7 @@ export default [
             {
                 keywords: ['private', '3'],
                 action: privateAction,
-                intent: 'check_location'
+                intent: 'industry'
             },
             {
                 keywords: ['sme', '4'],

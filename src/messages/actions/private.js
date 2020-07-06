@@ -1,38 +1,19 @@
+import { initialize, saveIsConfirmed, saveIndustry } from "../../actions/privateAction";
+
 export default [
     {
-        action: "check_location",
+        action: "industry",
         message: 'You selected the *Lagos* option: \n\nWhat industry do you work?',
         feedback_type: 'input',
-        // actionService: 'saveUserIppis()',
-
-        // feedback: [
-        //     {
-        //         input: "no",
-        //         next_action: "no",
-        //     },
-        //     {
-        //         input: "yes",
-        //         next_action: "yes",
-        //     },
-        // ],
-        next_action: "confirmed_staff" 
-    },
-    // {
-    //     action: "yes",
-    //     message: "What industry do you work?",
-    //     feedback_type: 'input',
-    //     actionService: 'saveUserIppis()',
-    //     next_action: "confirmed_staff" 
-    // },
-    {
-        action: "no",
-        message: "Unfortunately, we only give loans to individuals withing Lagos state",
+        actionService: initialize,
+        next_action: "is_confirmed_staff" 
     },
     {
-        action: "confirmed_staff",
+        action: "is_confirmed_staff",
         message: "Are you a confirmed staff?",
         feedback_type: 'input',
-        // actionService: 'saveUserNetPay()',
+        actionService: saveIndustry,
+        previous_action: "industry",
         next_action: "full_name"
     },
       
@@ -40,7 +21,8 @@ export default [
         action: "full_name",
         message: "Kindly confirm your name and surname:",
         feedback_type: 'input',
-        // actionService: 'saveFullName()',
+        actionService: saveIsConfirmed,
+        previous_action: "is_confirmed_staff",
         next_action: "close_session"
     },        
     {
